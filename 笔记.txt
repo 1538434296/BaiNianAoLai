@@ -1,0 +1,15 @@
+搭建服务器:
+1.全局安装 npm i express -g
+2.局部安装服务器  express --view=ejs server
+
+启动服务器:
+ change directory:
+     > cd server
+   install dependencies:
+     > npm install
+
+   run the app:
+     > SET DEBUG=server:* & npm start
+		 
+本地连接更改api下network
+
