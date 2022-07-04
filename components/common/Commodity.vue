@@ -10,7 +10,7 @@
 			class="commodity-img" 
 			:src="item.imgUrl" 
 			:style="'height:' + imgH + ';'" mode=""></image>
-			<viwe class="commodity-content">
+			<view class="commodity-content">
 				<text class="commodity-name" :style="'font-size:'+nameSize+';'">{{item.name}}</text>
 				<view>
 					<text class="pprice">${{item.pprice}}</text>
@@ -19,7 +19,7 @@
 				<view>
 					<text class="discount">{{item.discount}}折</text>
 				</view>
-			</viwe>
+			</view>
 		</view>
 	</view>
 </template>

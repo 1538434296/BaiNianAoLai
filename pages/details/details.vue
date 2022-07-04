@@ -38,7 +38,7 @@
 		<!-- 底部 -->
 		<view class="details-foot">
 			<view class="iconfont icon-xiaoxi"></view>
-			<view class="iconfont icon-gouwuche"></view>
+			<view class="iconfont icon-gouwuche" @tap="toCartBtn"></view>
 			<view class="add-shopcart" @tap="showPop">加入购物车</view>
 			<view class="purchase" @tap="showPop">立即购买</view>
 		</view>
@@ -48,12 +48,12 @@
 			<view class="pop-mask" @tap="hidePop"></view>
 			<!-- 内容块 -->
 			<view class="pop-box" :animation="animationData">
-				<view><image class="pop-img" src="../../static/img/Children1.jpg" mode=""></image></view>
+				<view><image class="pop-img" :src="goodsContent.imgUrl" mode=""></image></view>
 				<view class="pop-num">
 					<view>购买数量</view>
-					<UniNumberBox min=1></UniNumberBox>
+					<UniNumberBox min=1 :vakue='num' @change="changeNumber"></UniNumberBox>
 				</view>
-				<view class="pop-sub">确定</view>
+				<view class="pop-sub" @tap="clickBtn">确定</view>
 			</view>
 		</view>
 	</view>
@@ -61,9 +61,10 @@
 
 <script>
 	import $http from "@/common/api/request.js"
-	import Card from "../../components/common/Card.vue"
-	import CommodityList from "../../components/common/CommodityList.vue"
-	import UniNumberBox from "../../components/uni/uni-number-box/uni-number-box.vue"
+	import Card from "@/components/common/Card.vue"
+	import CommodityList from "@/components/common/CommodityList.vue"
+	import UniNumberBox from "@/components/uni/uni-number-box/uni-number-box.vue"
+	import { mapMutations } from "vuex"
 
 	export default {
 		components: {
@@ -118,7 +119,8 @@
 						oprice: 29,
 						discount: 4.9,
 					}
-				]
+				],
+				num: 1
 			}
 		},
 		onLoad(e) {
@@ -131,6 +133,7 @@
 				return true;
 			}
 		},
+		// 分享点击
 		onNavigationBarButtonTap(e) {
 			if(e.type === 'share') {
 				uni.share({
@@ -152,6 +155,27 @@
 			}
 		},
 		methods: {
+			...mapMutations(['addShopCart']),
+			
+			changeNumber(value) {
+				this.num = value;
+			},
+			// 加入购物车
+			clickBtn() {
+				
+					console.log(this.goodsContent);
+				let goods = this.goodsContent;
+				this.goodsContent['checked'] = false;
+				this.goodsContent['num'] = this.num;
+				// 加入Vuex
+				this.addShopCart(goods);
+				this.hidePop();
+				uni.showToast({
+					title: '成功加入购物车',
+					icon: 'none'
+				})
+				
+			},
 			getData(id) {
 				$http.request({
 					url: '/goods/id',
@@ -159,13 +183,17 @@
 						id
 					}
 				}).then((res) => {
-					console.log(res);
 					this.goodsContent = res.data[0]
 				}).catch((err)=> {
 					uni.showToast({
 						title:'请求失败',
 						icon:'none'
 					})
+				})
+			},
+			toCartBtn() {
+				uni.switchTab({
+					url: '../shopcart/shopcart'
 				})
 			},
 			showPop() {
@@ -207,6 +235,7 @@
 
 	.details-img {
 		width: 100%;
+		height: 700rpx;
 	}
 	
 	.details-foot {

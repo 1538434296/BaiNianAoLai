@@ -7,8 +7,8 @@
 			<!-- 商品内容 -->
 			<view class="shop-list">
 				<view class="shop-item" v-for="(item,index) in list" :key="index">
-					<label class="radio" :checked="item.checked">
-						<radio color="#FF3333"></radio>
+					<label class="radio" @tap="checkedFn(index)">
+						<radio color="#FF3333" :checked="item.checked"></radio>
 					</label>
 					<image class="shop-img" :src="item.imgUrl" mode=""></image>
 					<view class="shop-text">
@@ -16,21 +16,37 @@
 						<view class="shop-color f-color">{{item.color}}</view>
 						<view class="shop-price">
 							<view>${{item.pprice}}</view>
-							<view>*{{item.num}}</view>
+							<template v-if="!isNavBar">
+								<view>*{{item.num}}</view>
+							</template>
+							<template v-else>
+								<UniNumberBox :value="item.num"
+									min=1
+									@change="changeNum($event, index)"
+								></UniNumberBox>
+							</template>
 						</view>
 					</view>
 				</view>
 
 				<!-- 底部 -->
 				<view class="shop-foot">
-					<label class="radio foot-radio">
-						<radio></radio><text>全选</text>
+					<label class="radio foot-radio" @tap="checkedAllFn">
+						<radio color="#FF3333" :checked="checkedAll"></radio><text>全选</text>
 					</label>
-					<view class="foot-total">
-						<view class="foot-count">合计: $0</view>
-						<view class="foot-num">结算(0)</view>
+					<template v-if="!isNavBar">
+						<view class="foot-total">
+							<view class="foot-count">合计: <text class="f-active-color">${{totalCount.pprice}}</text></view>
+							<view class="foot-num" @tap="toConfirmOrder">结算({{totalCount.num}})</view>
+						</view>
+					</template>
+					<template v-else>
+						<view class="foot-total">
+							<view class="foot-num" style="background-color: #000000;">移入收藏夹</text></view>
+							<view class="foot-num" @tap="delGoodsFn">删除</view>
+						</view>
+					</template>
 					</view>
-				</view>
 			</view>
 		</template>
 		
@@ -45,9 +61,8 @@
 
 <script>
 	import uniNavBar from "@/components/uni/uni-nav-bar/uni-nav-bar.vue"
-	import {
-		mapState
-	} from 'vuex'
+	import {  mapState, mapActions, mapGetters, mapMutations  } from 'vuex'
+	import UniNumberBox from "@/components/uni/uni-number-box/uni-number-box.vue"
 	export default {
 		data() {
 			return {
@@ -57,10 +72,24 @@
 		computed: {
 			...mapState({
 				list: state => state.cart.list
-			})
+			}),
+			...mapGetters(['checkedAll', 'totalCount'])
+		},
+		methods: {
+			toConfirmOrder() {
+				uni.navigateTo({
+					url: '../confirm-order/confirm-order'
+				})
+			},
+			changeNum(value, index)  {
+				this.list[index].num = value;
+			},
+			...mapActions(['checkedAllFn', 'delGoodsFn']),
+			...mapMutations(['checkedFn'])
 		},
 		components: {
-			uniNavBar
+			uniNavBar,
+			UniNumberBox
 		}
 	}
 </script>
@@ -111,7 +140,7 @@
 	}
 
 	.shop-foot {
-		position: fixed;
+		position: absolute;
 		bottom: 0;
 		flex: 0;
 		width: 100%;

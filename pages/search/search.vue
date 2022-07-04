@@ -22,8 +22,8 @@
 				<view class="f-color">热门搜索</view>
 			</view>
 			<view >
-				<view v-for="(item, index) in remmendItem" 
-				:key="'info'+ index" 
+				<view v-for="(item, i) in remmendItem" 
+				:key="i" 
 				class="search-name f-color">{{item}}</view>
 			</view>
 		</view>

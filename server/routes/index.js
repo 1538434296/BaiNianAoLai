@@ -3,15 +3,6 @@ var router = express.Router();
 var connection = require('../db/sql.js');
 
 
-// 接口跨域
-router.all("*", function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    // res.setHeader("Access-Control-Allow-Origin", req.get("Origin")); // 添加这一行代码，代理配置不成功
-    res.setHeader("Access-Control-Allow-Methods", 'POST, GET, OPTIONS, DELETE, PUT');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, If-Modified-Since")
-    next();
-})
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	res.render('index', {

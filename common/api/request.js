@@ -1,7 +1,7 @@
 export default{
 	common:{
 		// 本地数据,使用前修改ip为本地地址
-		baseUrl: 'http://192.168.213.40:3000/api',
+		baseUrl: '/api/api',
 		data: {},
 		header: {
 			'Context-Type': "application/json",

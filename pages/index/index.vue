@@ -154,6 +154,7 @@
 				$http.request({
 					url: '/index_list/data'
 				}).then((res) => {
+					console.log(res);
 					this.topBar = res.topBar;
 					this.newTopBar = this.initData(res);
 				}).catch((err) => {

@@ -49,12 +49,17 @@
 				"path": "pages/my/my",
 				"style": {
 					"navigationBarTitleText": "",
+					"navigationStyle": "custom",
 					"enablePullDownRefresh": false
 				}
 			},
 			{
 				"path": "pages/shopcart/shopcart",
 				"style": {
+					"navigationBarTitleText": "",
+					"navigationStyle": "custom",
+					"enablePullDownRefresh": false,
+					"navigationBarBackgroundColor": "#FFFFFF",
 					"app-plus": {
 						"titleNView": false,
 						"scrollIndicator": "none"
@@ -141,6 +146,74 @@
 										]
 									}
 								}
+            }
+            
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/config/config",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/site-config/site-config",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "地址管理",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/my-add-site/my-add-site",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "新建地址",
+                "enablePullDownRefresh": false,
+								"app-plus": {
+									"scrollIndicator":"none",
+									"titleNView": {
+										"buttons": [
+											{
+												"float":"right",
+												"color":"#636263",
+												"text":"保存",
+												"fontSize":"16px",
+												"width": "60px"
+											}
+										]
+									}
+								}
+            }
+            
+        }
+        ,{
+            "path" : "pages/my-order/my-order",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的订单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/confirm-order/confirm-order",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "确认订单",
+                "enablePullDownRefresh": false
             }
             
         }
